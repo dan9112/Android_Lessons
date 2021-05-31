@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/fragmentWelcome">
+    <fragment
+        android:id="@+id/fragmentWelcome"
+        android:name="lord.main.fragment_with_navigationview.FragmentWelcome"
+        android:label=""
+        tools:layout="@layout/fragment_1">
+        <action
+            android:id="@+id/action_fragmentWelcome_to_fragment0"
+            app:destination="@id/fragment0" />
+        <action
+            android:id="@+id/action_fragmentWelcome_to_fragmentInfo"
+            app:destination="@id/fragmentInfo" />
+        <action
+            android:id="@+id/action_fragmentWelcome_to_fragmentSettings"
+            app:destination="@id/fragmentSettings" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment0"
+        android:name="lord.main.fragment_with_navigationview.Fragment0"
+        android:label=""
+        tools:layout="@layout/fragment_0">
+        <action
+            android:id="@+id/action_fragment0_to_fragment1"
+            app:destination="@id/fragment1"
+            app:popUpTo="@id/fragmentWelcome" />
+        <action
+            android:id="@+id/action_fragment0_self"
+            app:destination="@id/fragment0"
+            app:popUpTo="@id/fragmentWelcome" />
+        <action
+            android:id="@+id/action_fragment0_to_fragmentWelcome"
+            app:destination="@id/fragmentWelcome"
+            app:popUpTo="@id/fragmentWelcome" />
+        <action
+            android:id="@+id/action_fragment0_to_fragmentInfo"
+            app:destination="@id/fragmentInfo" />
+        <action
+            android:id="@+id/action_fragment0_to_fragmentSettings"
+            app:destination="@id/fragmentSettings" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment1"
+        android:name="lord.main.fragment_with_navigationview.Fragment1"
+        android:label=""
+        tools:layout="@layout/fragment_1">
+        <action
+            android:id="@+id/action_fragment1_to_fragmentWelcome"
+            app:destination="@id/fragmentWelcome"
+            app:popUpTo="@id/fragmentWelcome" />
+        <action
+            android:id="@+id/action_fragment1_to_fragmentInfo"
+            app:destination="@id/fragmentInfo" />
+        <action
+            android:id="@+id/action_fragment1_to_fragmentSettings"
+            app:destination="@id/fragmentSettings" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentInfo"
+        android:name="lord.main.fragment_with_navigationview.FragmentInfo"
+        android:label=""
+        tools:layout="@layout/fragment_1" />
+    <fragment
+        android:id="@+id/fragmentSettings"
+        android:name="lord.main.fragment_with_navigationview.FragmentSettings"
+        android:label="Настройки"
+        tools:layout="@layout/fragment_settings" />
+</navigation>

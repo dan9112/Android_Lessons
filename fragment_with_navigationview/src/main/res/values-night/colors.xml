@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="main">@color/white</color>
+    <color name="reverse_main">@color/teal_700</color>
+    <color name="main_background">@color/black</color>
+</resources>
