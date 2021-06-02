@@ -41,7 +41,7 @@ class Fragment1 : Fragment() {
 
         navView = (activity as ActivityMain).navView
 
-        when ((activity as ActivityMain).code) {
+        when (Fragment1Args.fromBundle(requireArguments()).code) {
             0 -> {
                 currentProjectIcon.setImageResource(R.drawable.kamaz13)
                 currentProjectTitle.text = resources.getString(R.string.kamaz13_title)
@@ -69,7 +69,7 @@ class Fragment1 : Fragment() {
 
         navView.getHeaderView(0).setOnClickListener {
             (activity as ActivityMain).drawerLayout.close()
-            findNavController().navigate(R.id.action_fragment1_to_fragmentWelcome)
+            findNavController().navigate(Fragment1Directions.actionFragment1ToFragmentWelcome())
         }
     }
 

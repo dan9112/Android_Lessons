@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -27,34 +28,35 @@ class FragmentWelcome : Fragment() {
         super.onActivityCreated(savedInstanceState)
         val navView = (activity as ActivityMain).navView
         val drawerLayout = (activity as ActivityMain).drawerLayout
-
         navView.setNavigationItemSelectedListener { item ->
+            var code = -1
             when (item.itemId) {
                 R.id.kamaz13 -> {
-                    (activity as ActivityMain).code = 0
+                    code = 0
                 }
                 R.id.code666 -> {
-                    (activity as ActivityMain).code = 1
+                    code = 1
                 }
                 R.id.friday_ -> {
-                    (activity as ActivityMain).code = 2
+                    code = 2
                 }
                 R.id.fragment_info -> {
-                    findNavController().navigate(R.id.action_fragmentWelcome_to_fragmentInfo)
+                    findNavController().navigate(FragmentWelcomeDirections.actionFragmentWelcomeToFragmentInfo())
                     return@setNavigationItemSelectedListener true
                 }
                 R.id.fragmentSettings -> {
-                    findNavController().navigate(R.id.action_fragmentWelcome_to_fragmentSettings)
+                    findNavController().navigate(FragmentWelcomeDirections.actionFragmentWelcomeToFragmentSettings())
                     drawerLayout.close()
                     return@setNavigationItemSelectedListener true
                 }
                 else -> {
-                    (activity as ActivityMain).code = -1
+                    code = -1
                     return@setNavigationItemSelectedListener true
                 }
             }
             drawerLayout.close()
-            findNavController().navigate(R.id.action_fragmentWelcome_to_fragment0)
+            if (code != -1) findNavController().navigate(FragmentWelcomeDirections.actionFragmentWelcomeToFragment0(code))
+            else Toast.makeText(context, "Ошибка перехода!", Toast.LENGTH_SHORT).show()
             true
         }
 

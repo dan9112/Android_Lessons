@@ -23,8 +23,6 @@ class ActivityMain : AppCompatActivity() {
      */
     lateinit var navView: NavigationView
 
-    var code = -1
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding =

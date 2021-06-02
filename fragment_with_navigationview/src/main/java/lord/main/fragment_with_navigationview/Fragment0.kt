@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
@@ -17,6 +18,7 @@ class Fragment0 : Fragment() {
     private lateinit var projectIcon: ImageView
     private lateinit var projectTitle: TextView
     private lateinit var projectDescription: TextView
+    private var code = -1
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,12 +30,18 @@ class Fragment0 : Fragment() {
             container,
             false
         )
+
+        val args = Fragment0Args.fromBundle(requireArguments())
+        code = args.code
+
         projectIcon = binding.projectIcon
         projectTitle = binding.projectTitle
         projectDescription = binding.projectDescription
 
         binding.projectGo.setOnClickListener { view: View ->
-            view.findNavController().navigate(R.id.action_fragment0_to_fragment1)
+            if (code != -1) view.findNavController()
+                .navigate(Fragment0Directions.actionFragment0ToFragment1(code))
+            else Toast.makeText(context, "Ошибка перехода!", Toast.LENGTH_SHORT).show()
         }
         return binding.root
     }
@@ -52,39 +60,39 @@ class Fragment0 : Fragment() {
         navView.setNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.kamaz13 -> {
-                    (activity as ActivityMain).code = 0
+                    code = 0
                 }
                 R.id.code666 -> {
-                    (activity as ActivityMain).code = 1
+                    code = 1
                 }
                 R.id.friday_ -> {
-                    (activity as ActivityMain).code = 2
+                    code = 2
                 }
                 R.id.fragment_info -> {
-                    findNavController().navigate(R.id.action_fragment0_to_fragmentInfo)
+                    findNavController().navigate(Fragment0Directions.actionFragment0ToFragmentInfo())
                     return@setNavigationItemSelectedListener true
                 }
                 R.id.fragmentSettings -> {
-                    findNavController().navigate(R.id.action_fragment0_to_fragmentSettings)
+                    findNavController().navigate(Fragment0Directions.actionFragment0ToFragmentSettings())
                     drawerLayout.close()
                     return@setNavigationItemSelectedListener true
                 }
                 else -> {
-                    (activity as ActivityMain).code = -1
+                    code = -1
                     return@setNavigationItemSelectedListener true
                 }
             }
             drawerLayout.close()
-            findNavController().navigate(R.id.action_fragment0_self)
+            findNavController().navigate(Fragment0Directions.actionFragment0Self(code))
             true
         }
 
         navView.getHeaderView(0).setOnClickListener {
             drawerLayout.close()
-            findNavController().navigate(R.id.action_fragment0_to_fragmentWelcome)
+            findNavController().navigate(Fragment0Directions.actionFragment0ToFragmentWelcome())
         }
 
-        when ((activity as ActivityMain).code) {
+        when (code) {
             0 -> {
                 projectIcon.visibility = View.VISIBLE
                 projectIcon.setImageResource(R.drawable.kamaz13)

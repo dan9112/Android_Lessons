@@ -41,6 +41,9 @@
         <action
             android:id="@+id/action_fragment0_to_fragmentSettings"
             app:destination="@id/fragmentSettings" />
+        <argument
+            android:name="code"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/fragment1"
@@ -57,6 +60,9 @@
         <action
             android:id="@+id/action_fragment1_to_fragmentSettings"
             app:destination="@id/fragmentSettings" />
+        <argument
+            android:name="code"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/fragmentInfo"
