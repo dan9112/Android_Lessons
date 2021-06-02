@@ -2,3 +2,5 @@ rootProject.name = "Android Lessons"
 include ':app'
 include ':p098_test'
 include ':fragment_with_navigationview'
+include ':menus'
+include ':live_data'
