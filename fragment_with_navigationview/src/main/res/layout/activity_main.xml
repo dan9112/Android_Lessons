@@ -7,19 +7,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <fragment
+            android:id="@+id/myNavHostFragment"
+            android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <fragment
-                android:id="@+id/myNavHostFragment"
-                android:name="androidx.navigation.fragment.NavHostFragment"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:defaultNavHost="true"
-                app:navGraph="@navigation/navigation" />
-        </LinearLayout>
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/navigation" />
 
         <com.google.android.material.navigation.NavigationView
             android:id="@+id/navView"
@@ -28,6 +22,7 @@
             android:layout_gravity="start"
             android:background="@color/main_background"
             app:headerLayout="@layout/nav_header_welcome"
+            app:itemIconTint="@color/reverse_main"
             app:itemTextColor="@color/reverse_main"
             app:menu="@menu/navdrawer_0_menu" />
 

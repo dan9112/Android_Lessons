@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <group
         android:id="@+id/m0"
         android:checkableBehavior="single">
@@ -29,7 +30,7 @@
                 android:id="@+id/fragment_info"
                 android:icon="@drawable/ic_info"
                 android:iconTint="@color/reverse_main"
-                android:title="Info" />
+                android:title="App about" />
             <item
                 android:id="@+id/fragmentSettings"
                 android:icon="@drawable/ic_setting"
