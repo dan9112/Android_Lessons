@@ -7,10 +7,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.OnLifecycleEvent
 import androidx.navigation.fragment.findNavController
 import lord.main.fragment_with_navigationview.databinding.Fragment1Binding
 
-class FragmentWelcome : Fragment() {
+class FragmentWelcome : Fragment(), LifecycleObserver {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -21,11 +24,20 @@ class FragmentWelcome : Fragment() {
             container,
             false
         )
+
+        viewLifecycleOwner.lifecycle.addObserver(this)
+
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    /*
+     * Функция используется!
+     */
+    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
+    fun onActivityCreated() {
+
+        viewLifecycleOwner.lifecycle.removeObserver(this)
+
         val navView = (activity as ActivityMain).navView
         val drawerLayout = (activity as ActivityMain).drawerLayout
         navView.setNavigationItemSelectedListener { item ->
@@ -55,7 +67,11 @@ class FragmentWelcome : Fragment() {
                 }
             }
             drawerLayout.close()
-            if (code != -1) findNavController().navigate(FragmentWelcomeDirections.actionFragmentWelcomeToFragment0(code))
+            if (code != -1) findNavController().navigate(
+                FragmentWelcomeDirections.actionFragmentWelcomeToFragment0(
+                    code
+                )
+            )
             else Toast.makeText(context, "Ошибка перехода!", Toast.LENGTH_SHORT).show()
             true
         }

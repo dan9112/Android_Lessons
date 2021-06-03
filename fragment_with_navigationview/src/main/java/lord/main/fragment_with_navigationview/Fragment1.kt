@@ -8,11 +8,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.OnLifecycleEvent
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.navigation.NavigationView
 import lord.main.fragment_with_navigationview.databinding.Fragment1Binding
 
-class Fragment1 : Fragment() {
+class Fragment1 : Fragment(), LifecycleObserver {
 
     private lateinit var currentProjectIcon: ImageView
     private lateinit var currentProjectTitle: TextView
@@ -33,11 +36,18 @@ class Fragment1 : Fragment() {
         currentProjectTitle = binding.currentProjectTitle
         currentProjectDescription = binding.currentProjectDescription
 
+        viewLifecycleOwner.lifecycle.addObserver(this)
+
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    /*
+     * Функция используется!
+     */
+    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
+    fun onActivityCreated() {
+
+        viewLifecycleOwner.lifecycle.removeObserver(this)
 
         navView = (activity as ActivityMain).navView
 

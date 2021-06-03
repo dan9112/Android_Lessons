@@ -9,11 +9,16 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.OnLifecycleEvent
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import lord.main.fragment_with_navigationview.databinding.Fragment0Binding
 
-class Fragment0 : Fragment() {
+import androidx.lifecycle.Lifecycle.Event.ON_CREATE
+
+
+class Fragment0 : Fragment(), LifecycleObserver {
 
     private lateinit var projectIcon: ImageView
     private lateinit var projectTitle: TextView
@@ -43,14 +48,19 @@ class Fragment0 : Fragment() {
                 .navigate(Fragment0Directions.actionFragment0ToFragment1(code))
             else Toast.makeText(context, "Ошибка перехода!", Toast.LENGTH_SHORT).show()
         }
+
+        viewLifecycleOwner.lifecycle.addObserver(this)
+
         return binding.root
     }
 
-    /**
-     * Заменить на современную реализацию функционала!
+    /*
+     * Функция используется!
      */
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    @OnLifecycleEvent(ON_CREATE)
+    fun onActivityCreated() {
+
+        viewLifecycleOwner.lifecycle.removeObserver(this)
 
         val navView = (activity as ActivityMain).navView
         val drawerLayout = (activity as ActivityMain).drawerLayout
