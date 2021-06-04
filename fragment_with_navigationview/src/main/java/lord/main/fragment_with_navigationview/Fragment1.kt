@@ -15,11 +15,29 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.navigation.NavigationView
 import lord.main.fragment_with_navigationview.databinding.Fragment1Binding
 
+/**
+ * Фрагмент для взаимодействия с выбранным проектом
+ */
 class Fragment1 : Fragment(), LifecycleObserver {
-
+    /**
+     * Виджет для отображения иконки выбранного проекта (если есть)
+     */
     private lateinit var currentProjectIcon: ImageView
+
+    /**
+     * Виджет для вывода заголовка выбранного проекта
+     */
     private lateinit var currentProjectTitle: TextView
+
+    /**
+     * Виджет для вывода описания выбранного проекта
+     */
     private lateinit var currentProjectDescription: TextView
+
+    /**
+     * Виджет навигационного меню. Перезаписывается содержимое при загрузке фрагмента, но меню
+     * выбора проекта возвращается перед уничтожением фрагмента
+     */
     private lateinit var navView: NavigationView
 
     override fun onCreateView(
@@ -35,20 +53,19 @@ class Fragment1 : Fragment(), LifecycleObserver {
         currentProjectIcon = binding.currentProjectIcon
         currentProjectTitle = binding.currentProjectTitle
         currentProjectDescription = binding.currentProjectDescription
-
-        viewLifecycleOwner.lifecycle.addObserver(this)
-
+        viewLifecycleOwner.lifecycle.addObserver(this)// подписываемся на события жизненного цикла родительской активности
         return binding.root
     }
 
-    /*
-     * Функция используется!
+    /**
+     * Функция для получения и обработки данных родительской активности.
+     *
+     * Важно: до окончания события onCreate активности данные, которые инициализируются в нём, будут
+     * возвращать значения null!
      */
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun onActivityCreated() {
-
-        viewLifecycleOwner.lifecycle.removeObserver(this)
-
+        viewLifecycleOwner.lifecycle.removeObserver(this)// отменяем подписку на события жизненного цикла родительской активности
         navView = (activity as ActivityMain).navView
 
         when (Fragment1Args.fromBundle(requireArguments()).code) {

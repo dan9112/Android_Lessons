@@ -17,12 +17,29 @@ import lord.main.fragment_with_navigationview.databinding.Fragment0Binding
 
 import androidx.lifecycle.Lifecycle.Event.ON_CREATE
 
-
+/**
+ * Фрагмент для отображения краткой информации о проектах, выбранных в меню навигации. Перехватывает
+ * его у родительской активности
+ */
 class Fragment0 : Fragment(), LifecycleObserver {
-
+    /**
+     * Виджет для отображения иконки проекта (если есть)
+     */
     private lateinit var projectIcon: ImageView
+
+    /**
+     * Виджет для вывода заголовка проекта
+     */
     private lateinit var projectTitle: TextView
+
+    /**
+     * Виджет для вывода краткого описания проекта
+     */
     private lateinit var projectDescription: TextView
+
+    /**
+     * Код, по которому определяется какой проект нужно отобразить во фрагменте
+     */
     private var code = -1
 
     override fun onCreateView(
@@ -36,7 +53,7 @@ class Fragment0 : Fragment(), LifecycleObserver {
             false
         )
 
-        val args = Fragment0Args.fromBundle(requireArguments())
+        val args = Fragment0Args.fromBundle(requireArguments())// получаем передаваемые фрагменту аргументы
         code = args.code
 
         projectIcon = binding.projectIcon
@@ -48,20 +65,19 @@ class Fragment0 : Fragment(), LifecycleObserver {
                 .navigate(Fragment0Directions.actionFragment0ToFragment1(code))
             else Toast.makeText(context, "Ошибка перехода!", Toast.LENGTH_SHORT).show()
         }
-
-        viewLifecycleOwner.lifecycle.addObserver(this)
-
+        viewLifecycleOwner.lifecycle.addObserver(this)// подписываемся на события жизненного цикла родительской активности
         return binding.root
     }
 
-    /*
-     * Функция используется!
+    /**
+     * Функция для получения и обработки данных родительской активности.
+     *
+     * Важно: до окончания события onCreate активности данные, которые инициализируются в нём, будут
+     * возвращать значения null!
      */
     @OnLifecycleEvent(ON_CREATE)
     fun onActivityCreated() {
-
-        viewLifecycleOwner.lifecycle.removeObserver(this)
-
+        viewLifecycleOwner.lifecycle.removeObserver(this)// отменяем подписку на события жизненного цикла родительской активности
         val navView = (activity as ActivityMain).navView
         val drawerLayout = (activity as ActivityMain).drawerLayout
         navView.menu.clear()
@@ -96,12 +112,12 @@ class Fragment0 : Fragment(), LifecycleObserver {
             findNavController().navigate(Fragment0Directions.actionFragment0Self(code))
             true
         }
-
+        // вешаем слушатель нажатия на виджет заголовка навигационного окна, который возвращает пользователя во фрагмент приветствия
         navView.getHeaderView(0).setOnClickListener {
             drawerLayout.close()
             findNavController().navigate(Fragment0Directions.actionFragment0ToFragmentWelcome())
         }
-
+        // определяем по коду какой проект нужно отобразить и выводим его данные пользователю
         when (code) {
             0 -> {
                 projectIcon.visibility = View.VISIBLE

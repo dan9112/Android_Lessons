@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
@@ -13,6 +12,9 @@ import androidx.lifecycle.OnLifecycleEvent
 import androidx.navigation.fragment.findNavController
 import lord.main.fragment_with_navigationview.databinding.Fragment1Binding
 
+/**
+ * Приветственный фрагмент
+ */
 class FragmentWelcome : Fragment(), LifecycleObserver {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -24,20 +26,19 @@ class FragmentWelcome : Fragment(), LifecycleObserver {
             container,
             false
         )
-
-        viewLifecycleOwner.lifecycle.addObserver(this)
-
+        viewLifecycleOwner.lifecycle.addObserver(this)// подписываемся на события жизненного цикла родительской активности
         return binding.root
     }
 
-    /*
-     * Функция используется!
+    /**
+     * Функция для получения и обработки данных родительской активности.
+     *
+     * Важно: до окончания события onCreate активности данные, которые инициализируются в нём, будут
+     * возвращать значения null!
      */
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun onActivityCreated() {
-
-        viewLifecycleOwner.lifecycle.removeObserver(this)
-
+        viewLifecycleOwner.lifecycle.removeObserver(this)// отменяем подписку на события жизненного цикла родительской активности
         val navView = (activity as ActivityMain).navView
         val drawerLayout = (activity as ActivityMain).drawerLayout
         navView.setNavigationItemSelectedListener { item ->
@@ -66,12 +67,9 @@ class FragmentWelcome : Fragment(), LifecycleObserver {
                 }
             }
             drawerLayout.close()
-            if (code != -1) findNavController().navigate(
-                FragmentWelcomeDirections.actionFragmentWelcomeToFragment0(
-                    code
-                )
+            findNavController().navigate(
+                FragmentWelcomeDirections.actionFragmentWelcomeToFragment0(code)
             )
-            else Toast.makeText(context, "Ошибка перехода!", Toast.LENGTH_SHORT).show()
             true
         }
 
